@@ -1,0 +1,23 @@
+A small gem which provides a retry-method for Eventmachine. Synopsis:
+
+  EM.run do
+    i=0
+    EM.with_retries 1,2,3 do
+      Kernel.puts "trial #{i+=1}"
+    end
+  end
+
+Also included is a convenience wrapper for existing methods. Synopsis:
+
+  class A
+    extend EMRetryMethod
+    
+    def foo
+      puts 'foo'
+    end
+    retry_method :foo, 1,2,3
+  end
+
+Every call to #foo will be retried after 1, another 2 and another 3 seconds before giving up.
+
+NOTE: ONLY WORKS WITH RUBY 1.9
